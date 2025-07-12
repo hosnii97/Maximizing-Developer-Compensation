@@ -65,7 +65,8 @@ This executes:
 
 ## 🔖 License & Contact  
 This project is for **educational and research** purposes.  
-📬 Contact: hosni.abomokh@university.edu  
+📬 Contact: hosniabomokh97@gmail.com  
+📬 Contact: itaypiz71@gmail.com
 
 ---
 
