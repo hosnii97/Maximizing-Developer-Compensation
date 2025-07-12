@@ -1,5 +1,5 @@
 # Maximizing Developer Compensation  
-## Through Temporal-Weighted Analysis (2017–2024)
+## Interpretable Machine Learning for Developer Salary Prediction and Skill Growth Analysis (2017–2024)
 
 ### 👤 Authors  
 Hosni Abomokh, Itay Pizanty  
