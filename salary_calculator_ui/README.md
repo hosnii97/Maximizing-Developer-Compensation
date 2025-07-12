@@ -19,15 +19,16 @@ This is a web-based calculator that allows developers to estimate their annual s
 ### 🔁 Option 1: Clone via Git
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo/salary_calculator_ui
+git clone https://github.com/hosnii97/Maximizing-Developer-Compensation.git
+cd Maximizing-Developer-Compensation/salary_calculator_ui
 ```
 
 ### 📁 Option 2: Download ZIP
 
-1. Click the green **Code** button in GitHub
-2. Select **Download ZIP**
-3. Unzip and open the folder `salary_calculator_ui/`
+1. Go to: [https://github.com/hosnii97/Maximizing-Developer-Compensation/tree/main/salary_calculator_ui](https://github.com/hosnii97/Maximizing-Developer-Compensation/tree/main/salary_calculator_ui)
+2. Click the green **Code** button
+3. Select **Download ZIP**
+4. Unzip and open the folder `salary_calculator_ui/`
 
 ---
 
@@ -43,8 +44,8 @@ in any modern browser (Chrome, Firefox, Edge).
 
 > No setup or installation is required. The UI is fully static.
 
----
 
+---
 
 ## 📄 License
 
