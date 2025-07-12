@@ -20,8 +20,13 @@ Temporal-weighted machine learning applied to 2017–2024 Stack Overflow survey 
 
 ---
 
-## 📑 Dataset  
-268,935 filtered developer responses from Stack Overflow surveys (2017–2024).
+## 🌐 Data Source
+
+- **Source**: [Stack Overflow Developer Survey](https://survey.stackoverflow.co)
+- **Accessed on**: July 2025
+- **License**: CC BY-SA 4.0 (Attribution-ShareAlike)
+
+Survey ZIP files (2017–2024) are automatically downloaded by our scripts into the `data/` folder.
 
 ---
 
