@@ -45,18 +45,6 @@ in any modern browser (Chrome, Firefox, Edge).
 
 ---
 
-## 📚 About the Project
-
-This calculator is part of a larger research project:
-
-**Title**: *Maximizing Developer Compensation Through Temporal-Weighted Analysis*  
-**Authors**: Hosni Abomokh & Itay Pizanty  
-**Institution**: University of Haifa, Data Science Lab  
-**ML Model Accuracy**: 63.1% (R²)
-
-🔗 For full methodology, data cleaning, feature engineering, and model training, see the root [`README.md`](../README.md)
-
----
 
 ## 📄 License
 
