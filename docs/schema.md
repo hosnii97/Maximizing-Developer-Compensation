@@ -8,7 +8,7 @@ This document outlines the flow of data through the project and the transformati
 
 - **Source**: Stack Overflow Developer Surveys (2017–2024)
 - **Format**: CSV files inside ZIP archives
-- **Retrieved by**: `download_data.py` (calls `fetch_and_unpack()`)
+- **Retrieved by**:  `fetch_and_unpack()`
 
 ---
 
