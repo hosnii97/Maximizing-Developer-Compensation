@@ -1,0 +1,19 @@
+████████████████████████████████████████████████████████████████████████████
+
+📂 DATA DIRECTORY NOTICE
+
+You do NOT need to manually add any data files here.
+
+Once you run the main script:
+    ▶️  python main.py
+
+The following will happen automatically:
+  ✅ Survey ZIP files (2017–2024) are downloaded from Stack Overflow
+  ✅ Files are extracted and renamed for consistency
+  ✅ Data is cleaned and prepared for modeling
+
+⚠️ NOTE:
+You can safely ignore this folder when cloning or downloading the project.
+All required data will be generated as needed.
+
+████████████████████████████████████████████████████████████████████████████
