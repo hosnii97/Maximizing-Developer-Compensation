@@ -7,6 +7,7 @@ from preprocessing import summarize_nulls, simplify_and_encode
 from model.utils import prepare_train_test, prepare_train_test_interpolation
 from model.base_model import train_base_model, evaluate_model
 from model.weighted_model import compute_sample_weights, train_weighted_model, evaluate_weighted_model
+from contextlib import redirect_stdout
 
 
 def ingest_data() -> dict[int, pd.DataFrame]:
@@ -124,4 +125,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    with open('output_log.txt', 'w', encoding='utf-8') as f:
+        with redirect_stdout(f):
+            main()
