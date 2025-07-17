@@ -49,6 +49,9 @@ This executes:
 - Model training & evaluation
 - Results output (MAE, R², predictions, importances)
 
+✅ Once the run finishes, a file named output_log.txt will be created, containing detailed logs of the execution process.
+
+
 ---
 
 ## 🗂 Project Structure  
