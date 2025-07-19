@@ -7,7 +7,14 @@ DATA_DIR = "data"
 
 
 def fetch_and_unpack(years=range(2017, 2025), outdir=DATA_DIR):
+    """
+    Downloads and unpacks Stack Overflow Developer Survey data for the specified years.
 
+    - Downloads each year's ZIP file from the official Stack Overflow survey dataset URL.
+    - Extracts the ZIP file into a folder named after the year.
+    - Renames the main CSV file ("survey_results_public.csv") to "{year}.csv".
+    - Removes the schema file ("survey_results_schema.csv") if it exists.
+    """
     os.makedirs(outdir, exist_ok=True)
 
     for yr in years:
@@ -46,7 +53,14 @@ def fetch_and_unpack(years=range(2017, 2025), outdir=DATA_DIR):
 
 
 def load_raw_data(data_dir=DATA_DIR):
+    """
+    Loads the cleaned and renamed survey CSV files for each year from the data directory.
 
+    - Checks that the specified data directory exists.
+    - Iterates through subdirectories named by year (e.g., "2017", "2018", ...).
+    - Loads the CSV file named "{year}.csv" into a pandas DataFrame.
+    - Returns a dictionary mapping year → DataFrame.
+    """
     if not os.path.isdir(data_dir):
         raise FileNotFoundError(
             f"Data directory '{data_dir}' not found. "
