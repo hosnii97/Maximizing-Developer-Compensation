@@ -6,6 +6,9 @@ from typing import Optional, Sequence
 
 
 def summarize_nulls(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Summarizes the number of null values in the dataset before and after filtering out rows with missing compensation.
+    """
     nulls_before = df.isnull().sum()
     filtered = df[df['compensation_total'].notnull()]
     nulls_after = filtered.isnull().sum()
@@ -18,6 +21,9 @@ def summarize_nulls(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def preprocess_db_worked(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Standardizes and fills missing values in the 'db_worked' column, mapping common variations to unified labels.
+    """
     df = df.copy()
     total = len(df)
 
@@ -65,6 +71,9 @@ def preprocess_db_worked(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def preprocess_langs_worked(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Standardizes and fills missing values in the 'langs_worked' column, unifying variations in language names.
+    """
     df = df.copy()
     total = len(df)
 
@@ -107,6 +116,9 @@ def preprocess_langs_worked(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def preprocess_platform_worked(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Cleans and normalizes the 'platform_worked' column by mapping similar platform names to common labels.
+    """
     df = df.copy()
     total = len(df)
 
@@ -155,6 +167,9 @@ def preprocess_platform_worked(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def preprocess_webframe_worked(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Cleans and standardizes the 'webframe_worked' column by mapping related web frameworks to unified names.
+    """
     df = df.copy()
     total = len(df)
 
@@ -200,6 +215,9 @@ def preprocess_webframe_worked(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def preprocess_compensation(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Cleans the 'compensation_total' column by parsing strings to float, filtering unreasonable values, and converting currencies.
+    """
     df = df.copy()
     df = df[df['compensation_total'].notnull()].copy()
     before = len(df)
@@ -229,6 +247,9 @@ def preprocess_compensation(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def preprocess_country(df: pd.DataFrame, top_n: int = 15) -> pd.DataFrame:
+    """
+    Simplifies country names and groups less frequent entries into an 'Other' category.
+    """
     df = df.copy()
     total_before = len(df)
 
@@ -263,6 +284,9 @@ def preprocess_country(df: pd.DataFrame, top_n: int = 15) -> pd.DataFrame:
 
 
 def preprocess_currency(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Filters out rows with missing currency values.
+    """
     df = df.copy()
     total_before = len(df)
     print("\n=== Pipeline: currency preprocessing ===")
@@ -274,6 +298,9 @@ def preprocess_currency(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def preprocess_fill_unknown(df: pd.DataFrame, cols: List[str]) -> pd.DataFrame:
+    """
+    Fills null values in specified columns with the label 'Unknown'.
+    """
     df = df.copy()
     for col in cols:
         if col in df.columns:
@@ -282,6 +309,9 @@ def preprocess_fill_unknown(df: pd.DataFrame, cols: List[str]) -> pd.DataFrame:
 
 
 def preprocess_dev_type(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Maps raw developer type strings into broader, unified developer categories.
+    """
     df = df.copy()
     total = len(df)
     nulls_before = df['dev_type'].isna().sum()
@@ -342,6 +372,9 @@ def preprocess_dev_type(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def preprocess_org_size(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Simplifies organizational size descriptions into predefined size buckets.
+    """
     df = df.copy()
     total = len(df)
     nulls_before = df['org_size'].isna().sum()
@@ -387,6 +420,9 @@ def preprocess_org_size(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def preprocess_currency_conversion(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Converts compensation values to USD based on a fixed mapping of currency conversion rates.
+    """
     df = df.copy()
     base_rates = {
         'PLN': 0.22, 'SEK': 0.10, 'CAD': 0.75, 'RUB': 0.013, 'MXN': 0.057,
@@ -428,6 +464,9 @@ def preprocess_currency_conversion(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def clean_compensation_string(x: str) -> float:
+    """
+    Parses a compensation string to a float, handling different formatting styles.
+    """
     if pd.isna(x):
         return np.nan
     s = str(x).strip()
@@ -458,6 +497,9 @@ def preprocess_years_as_category(
         *,
         categories=None
 ) -> pd.DataFrame:
+    """
+    Converts experience columns into categorical buckets such as '0', '1-2', '3-5', etc.
+    """
     if categories is None:
         categories = ['Unknown', '0', '1-2', '3-5', '6-10', '20+']
     df = df.copy()
@@ -522,6 +564,9 @@ def preprocess_years_as_category(
 
 
 def categorize_education(val: str) -> str:
+    """
+    Maps raw education level strings into standardized categories like Bachelor's, Master's, Doctorate, etc.
+    """
     if not isinstance(val, str):
         return 'Unknown'
     val_lower = val.lower()
@@ -545,6 +590,9 @@ def categorize_education(val: str) -> str:
 
 
 def preprocess_education_level(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Standardizes and simplifies the 'education_level' column into broader categories.
+    """
     df = df.copy()
     total = len(df)
 
@@ -574,6 +622,9 @@ def preprocess_education_level(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def simplify_employment(val: str) -> str:
+    """
+    Maps detailed employment descriptions to high-level employment types.
+    """
     if not isinstance(val, str):
         return 'Unknown'
     val_lower = val.lower()
@@ -593,6 +644,9 @@ def simplify_employment(val: str) -> str:
 
 
 def preprocess_employment(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Cleans and simplifies the 'employment' column into general employment categories.
+    """
     df = df.copy()
     total = len(df)
 
@@ -627,6 +681,9 @@ def encode_df_top_k(
         k: int = 20,
         exclude: Optional[Sequence[str]] = None
 ) -> pd.DataFrame:
+    """
+    Encodes top-k most frequent categorical values (or semicolon-separated tags) into binary indicator columns.
+    """
     df = df.copy()
     exclude = set(exclude or [])
     exclude.add('country')
@@ -655,13 +712,18 @@ def encode_df_top_k(
 
 
 def drop_unused_dummies(df: pd.DataFrame) -> pd.DataFrame:
-
+    """
+    Removes dummy columns that represent 'Other' or 'Unknown' values to reduce dimensionality.
+    """
     pattern = re.compile(r".*_(Other|Unknown)$")
     to_drop = [col for col in df.columns if pattern.match(col)]
     return df.drop(columns=to_drop, errors='ignore')
 
 
 def simplify_and_encode(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Applies a full preprocessing pipeline, including cleaning, normalization, and top-k encoding of selected fields.
+    """
     df = preprocess_currency(df)
     df = preprocess_compensation(df)
     df = preprocess_country(df, top_n=30)
