@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Salary Calculator - Temporal-Weighted Analysis</title>
+    <meta name="description" content="Advanced salary calculator using temporal-weighted Random Forest model with confidence intervals based on tree prediction variance">
+    <meta name="keywords" content="developer salary, programming salary calculator, tech compensation, machine learning prediction, confidence intervals">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner">
+            <i class="fas fa-brain"></i>
+            <p>Loading Temporal-Weighted Model...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-chart-line"></i>
+                <span>DevSalary Pro</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#calculator" class="nav-link">Calculator</a>
+                <a href="#methodology" class="nav-link">Methodology</a>
+                <a href="#insights" class="nav-link">Insights</a>
+                <a href="#about" class="nav-link">About</a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Advanced Developer Salary Calculator
+                    <span class="highlight">with Temporal Weighting</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Predict your earning potential using our temporal-weighted Random Forest model 
+                    trained on 268,935+ developer responses with confidence intervals based on tree prediction variance.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">268K+</div>
+                        <div class="stat-label">Developer Responses</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Confidence Intervals</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">2017-2024</div>
+                        <div class="stat-label">Temporal Data</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">R² 0.631</div>
+                        <div class="stat-label">Model Accuracy</div>
+                    </div>
+                </div>
+                <a href="#calculator" class="cta-button">
+                    <i class="fas fa-calculator"></i>
+                    Calculate Your Salary
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="calculator-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Salary Prediction Calculator</h2>
+                <p>Enter your details below to get a personalized salary prediction with confidence intervals</p>
+            </div>
+
+            <div class="calculator-container">
+                <!-- Input Form -->
+                <div class="calculator-form">
+                    <form id="salaryForm">
+                        <!-- Geographic Information -->
+                        <div class="form-group">
+                            <label for="country">
+                                <i class="fas fa-globe"></i>
+                                Country/Location
+                            </label>
+                            <select id="country" name="country" required>
+                                <option value="">Select your country</option>
+                                <option value="United States">United States</option>
+                                <option value="Switzerland">Switzerland</option>
+                                <option value="Denmark">Denmark</option>
+                                <option value="Norway">Norway</option>
+                                <option value="Netherlands">Netherlands</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Sweden">Sweden</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Germany">Germany</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="France">France</option>
+                                <option value="Israel">Israel</option>
+                                <option value="Austria">Austria</option>
+                                <option value="Belgium">Belgium</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Experience Information -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="experience">
+                                    <i class="fas fa-briefcase"></i>
+                                    Years of Professional Experience
+                                </label>
+                                <input type="number" id="experience" name="experience" min="0" max="50" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">
+                                    <i class="fas fa-user"></i>
+                                    Age
+                                </label>
+                                <input type="number" id="age" name="age" min="18" max="80" required>
+                            </div>
+                        </div>
+
+                        <!-- Company Information -->
+                        <div class="form-group">
+                            <label for="companySize">
+                                <i class="fas fa-building"></i>
+                                Company Size
+                            </label>
+                            <select id="companySize" name="companySize" required>
+                                <option value="">Select company size</option>
+                                <option value="Small">Small (2-19 employees)</option>
+                                <option value="Medium">Medium (20-99 employees)</option>
+                                <option value="Large">Large (100-999 employees)</option>
+                                <option value="Enterprise">Enterprise (1,000-9,999 employees)</option>
+                                <option value="Large Enterprise">Large Enterprise (10,000+ employees)</option>
+                            </select>
+                        </div>
+
+                        <!-- Employment Type -->
+                        <div class="form-group">
+                            <label for="employmentType">
+                                <i class="fas fa-clock"></i>
+                                Employment Type
+                            </label>
+                            <select id="employmentType" name="employmentType" required>
+                                <option value="">Select employment type</option>
+                                <option value="Full-time">Full-time Employee</option>
+                                <option value="Part-time">Part-time Employee</option>
+                                <option value="Freelance">Freelancer/Contractor</option>
+                                <option value="Remote">Remote Employee</option>
+                            </select>
+                        </div>
+
+                        <!-- Programming Languages -->
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-code"></i>
+                                Programming Languages (Select all that apply)
+                            </label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="languages" value="Go">
+                                    <span class="checkmark"></span>
+                                    Go <span class="premium">+25.8%</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="languages" value="Rust">
+                                    <span class="checkmark"></span>
+                                    Rust <span class="premium">+22.4%</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="languages" value="Scala">
+                                    <span class="checkmark"></span>
+                                    Scala <span class="premium">+18.7%</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="languages" value="TypeScript">
+                                    <span class="checkmark"></span>
+                                    TypeScript <span class="premium">+12.3%</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="languages" value="Python">
+                                    <span class="checkmark"></span>
+                                    Python <span class="premium">+7.8%</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="languages" value="Java">
+                                    <span class="checkmark"></span>
+                                    Java <span class="premium">+3.2%</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="languages" value="JavaScript">
+                                    <span class="checkmark"></span>
+                                    JavaScript <span class="premium">+1.5%</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="languages" value="C#">
+                                    <span class="checkmark"></span>
+                                    C# <span class="penalty">-2.1%</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="languages" value="PHP">
+                                    <span class="checkmark"></span>
+                                    PHP <span class="penalty">-8.4%</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="languages" value="Ruby">
+                                    <span class="checkmark"></span>
+                                    Ruby <span class="penalty">-12.6%</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Calculate Button -->
+                        <button type="submit" class="calculate-btn">
+                            <i class="fas fa-chart-line"></i>
+                            Calculate Salary Prediction
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="results-panel" id="resultsPanel">
+                    <div class="results-header">
+                        <h3><i class="fas fa-chart-bar"></i> Salary Prediction Results</h3>
+                    </div>
+                    
+                    <div class="prediction-card">
+                        <div class="prediction-main">
+                            <div class="prediction-amount" id="predictedSalary">$0</div>
+                            <div class="prediction-label">Predicted Annual Salary</div>
+                        </div>
+                        
+                        <div class="confidence-interval">
+                            <div class="confidence-header">
+                                <i class="fas fa-info-circle"></i>
+                                95% Confidence Interval
+                            </div>
+                            <div class="confidence-range" id="confidenceRange">
+                                $0 - $0
+                            </div>
+                            <div class="confidence-explanation">
+                                Based on Random Forest tree prediction variance. 
+                                95% probability your actual salary falls within this range.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature Impact Analysis -->
+                    <div class="feature-impact">
+                        <h4><i class="fas fa-bullseye"></i> Salary Impact Factors</h4>
+                        <div id="impactChart">
+                            <canvas id="impactCanvas"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Recommendations -->
+                    <div class="recommendations" id="recommendations">
+                        <h4><i class="fas fa-lightbulb"></i> Optimization Recommendations</h4>
+                        <div id="recommendationsList"></div>
+                    </div>
+
+                    <!-- Model Information -->
+                    <div class="model-info">
+                        <h4><i class="fas fa-cogs"></i> Model Information</h4>
+                        <div class="model-details">
+                            <div class="model-stat">
+                                <span class="label">Algorithm:</span>
+                                <span class="value">Temporal-Weighted Random Forest</span>
+                            </div>
+                            <div class="model-stat">
+                                <span class="label">Training Data:</span>
+                                <span class="value">268,935 developer responses (2017-2024)</span>
+                            </div>
+                            <div class="model-stat">
+                                <span class="label">Model Accuracy (R²):</span>
+                                <span class="value">0.631</span>
+                            </div>
+                            <div class="model-stat">
+                                <span class="label">Temporal Weighting:</span>
+                                <span class="value">2024 data has 2.9x more influence than 2017</span>
+                            </div>
+                            <div class="model-stat">
+                                <span class="label">Confidence Intervals:</span>
+                                <span class="value">Computed from tree prediction variance (σ_trees)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section id="methodology" class="methodology-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Methodology & Confidence Intervals</h2>
+                <p>Understanding how our temporal-weighted model works and computes salary ranges</p>
+            </div>
+
+            <div class="methodology-grid">
+                <div class="methodology-card">
+                    <div class="card-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Temporal Weighting</h3>
+                    <p>
+                        Our model uses exponential temporal weighting: <strong>w(t) = e^(-λ(T-t))</strong>
+                        where more recent years receive higher importance. 2024 data has 2.9x more 
+                        influence than 2017 data, ensuring predictions reflect current market conditions.
+                    </p>
+                </div>
+
+                <div class="methodology-card">
+                    <div class="card-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3>Random Forest Model</h3>
+                    <p>
+                        We use a Random Forest with 100 trees, each trained on different subsets of 
+                        the data with temporal weights. This ensemble approach provides robust 
+                        predictions and enables uncertainty quantification through tree variance.
+                    </p>
+                </div>
+
+                <div class="methodology-card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-area"></i>
+                    </div>
+                    <h3>Confidence Intervals</h3>
+                    <p>
+                        <strong>Addressing the Professor's Question:</strong> Our salary ranges are 
+                        95% confidence intervals computed from Random Forest tree prediction variance:
+                        <br><br>
+                        <strong>CI = μ ± (1.96 × σ_trees / √100)</strong>
+                        <br><br>
+                        Where μ is the mean prediction across trees and σ_trees is the standard 
+                        deviation of individual tree predictions.
+                    </p>
+                </div>
+
+                <div class="methodology-card">
+                    <div class="card-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Three-Model Validation</h3>
+                    <p>
+                        We validated our approach using three models:
+                        <br>• <strong>Baseline (2024 Test):</strong> Traditional training on 2017-2023, testing on 2024
+                        <br>• <strong>Temporal-Weighted:</strong> Same split with exponential weighting
+                        <br>• <strong>Comprehensive:</strong> Traditional cross-validation on all years
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Insights Section -->
+    <section id="insights" class="insights-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Key Market Insights</h2>
+                <p>Data-driven insights from our temporal-weighted analysis</p>
+            </div>
+
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Language Premiums</h3>
+                    <div class="insight-content">
+                        <div class="premium-item">
+                            <span class="lang">Go</span>
+                            <span class="premium-value positive">+25.8%</span>
+                        </div>
+                        <div class="premium-item">
+                            <span class="lang">Rust</span>
+                            <span class="premium-value positive">+22.4%</span>
+                        </div>
+                        <div class="premium-item">
+                            <span class="lang">TypeScript</span>
+                            <span class="premium-value positive">+12.3%</span>
+                        </div>
+                        <div class="premium-item">
+                            <span class="lang">Python</span>
+                            <span class="premium-value positive">+7.8%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Company Size Impact</h3>
+                    <div class="insight-content">
+                        <div class="size-item">
+                            <span class="size">Large Enterprise</span>
+                            <span class="multiplier">1.35x</span>
+                        </div>
+                        <div class="size-item">
+                            <span class="size">Enterprise</span>
+                            <span class="multiplier">1.25x</span>
+                        </div>
+                        <div class="size-item">
+                            <span class="size">Large</span>
+                            <span class="multiplier">1.15x</span>
+                        </div>
+                        <div class="size-item">
+                            <span class="size">Medium</span>
+                            <span class="multiplier">1.00x</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Geographic Leaders</h3>
+                    <div class="insight-content">
+                        <div class="geo-item">
+                            <span class="country">United States</span>
+                            <span class="salary">$125,000</span>
+                        </div>
+                        <div class="geo-item">
+                            <span class="country">Switzerland</span>
+                            <span class="salary">$102,000</span>
+                        </div>
+                        <div class="geo-item">
+                            <span class="country">Denmark</span>
+                            <span class="salary">$89,500</span>
+                        </div>
+                        <div class="geo-item">
+                            <span class="country">Norway</span>
+                            <span class="salary">$87,200</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Market Trends</h3>
+                    <div class="insight-content">
+                        <div class="trend-item">
+                            <span class="trend">Remote Work</span>
+                            <span class="trend-value">15% → 42%</span>
+                        </div>
+                        <div class="trend-item">
+                            <span class="trend">AI/ML Premium</span>
+                            <span class="trend-value">8% → 15%</span>
+                        </div>
+                        <div class="trend-item">
+                            <span class="trend">Cloud Skills</span>
+                            <span class="trend-value">12% → 28%</span>
+                        </div>
+                        <div class="trend-item">
+                            <span class="trend">Salary Growth</span>
+                            <span class="trend-value">4.2% CAGR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>About This Calculator</h2>
+                <p>Built by data science students using advanced machine learning techniques</p>
+            </div>
+
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Research Project</h3>
+                    <p>
+                        This calculator is the result of a comprehensive data science research project 
+                        conducted by <strong>Hosni Abomokh</strong> and <strong>Itay Pizanty</strong> 
+                        under the supervision of <strong>Prof. Mario</strong> in the Data Science Lab.
+                    </p>
+                    
+                    <h3>Methodology Innovation</h3>
+                    <p>
+                        Our key innovation is the implementation of <strong>temporal weighting</strong> 
+                        in salary prediction models. Unlike traditional approaches that treat all 
+                        historical data equally, our method assigns higher importance to recent years, 
+                        reflecting the rapid pace of change in the technology sector.
+                    </p>
+
+                    <h3>Data Source</h3>
+                    <p>
+                        The model is trained on <strong>268,935 developer responses</strong> from the 
+                        Stack Overflow Developer Survey spanning 2017-2024. This represents one of 
+                        the largest and most comprehensive datasets for developer compensation analysis.
+                    </p>
+
+                    <h3>Academic Rigor</h3>
+                    <p>
+                        Our approach includes:
+                        <br>• Three-model validation framework
+                        <br>• Confidence intervals based on Random Forest tree variance
+                        <br>• Comprehensive feature engineering and selection
+                        <br>• Temporal weighting with exponential decay (λ = 0.15)
+                    </p>
+                </div>
+
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">268,935</div>
+                        <div class="stat-label">Developer Responses</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Years of Data</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">180+</div>
+                        <div class="stat-label">Countries</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">0.631</div>
+                        <div class="stat-label">Model R² Score</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Research Project</h4>
+                    <p>Temporal-Weighted Developer Salary Analysis</p>
+                    <p>Data Science Lab - Prof. Mario</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Authors</h4>
+                    <p>Hosni Abomokh</p>
+                    <p>Itay Pizanty</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Methodology</h4>
+                    <p>Random Forest with Temporal Weighting</p>
+                    <p>Tree Variance-Based Confidence Intervals</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Data Source</h4>
+                    <p>Stack Overflow Developer Survey</p>
+                    <p>2017-2024 (268,935 responses)</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Data Science Lab. Academic research project for educational purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/calculator.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/responsive.js"></script>
+    <script src="js/charts.js"></script>
+</body>
+</html>
+
