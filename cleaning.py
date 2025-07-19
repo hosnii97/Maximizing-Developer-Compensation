@@ -54,7 +54,10 @@ CANON_COLS = list(alias_map.keys())
 
 
 def consolidate_aliases(df: pd.DataFrame) -> pd.DataFrame:
-
+ """
+    Consolidates multiple column aliases in a DataFrame into a single canonical column.
+    For each set of aliases, it merges available columns into one column with a standard name.
+ """
     df = df.copy()
     present = defaultdict(list)
     for col in df.columns:
@@ -74,7 +77,10 @@ def consolidate_aliases(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def harmonize_and_select(dfs: dict[int, pd.DataFrame]) -> dict[int, pd.DataFrame]:
-
+    """
+    Standardizes column names across multiple yearly DataFrames and selects a fixed set of canonical columns.
+    Fills in missing columns with NaN if they're not present in a given year.
+    """
     out = {}
     for yr, df in dfs.items():
         df = consolidate_aliases(df)
@@ -87,7 +93,9 @@ def harmonize_and_select(dfs: dict[int, pd.DataFrame]) -> dict[int, pd.DataFrame
 
 
 def drop_empty_and_low_info(dfs: dict[int, pd.DataFrame], low_info_threshold: float = 0.05) -> dict[int, pd.DataFrame]:
-
+    """
+    Removes columns from each yearly DataFrame that are either completely empty or contain insufficient data.
+    """
     out = {}
     for yr, df in dfs.items():
         empty = df.columns[df.isnull().all()]
@@ -102,7 +110,10 @@ def drop_empty_and_low_info(dfs: dict[int, pd.DataFrame], low_info_threshold: fl
 
 
 def convert_to_numeric(dfs: dict[int, pd.DataFrame]) -> dict[int, pd.DataFrame]:
-
+    """
+    Convert all columns (excluding known ID/categorical columns) in each yearly DataFrame to numeric types.
+    Non-convertible values are coerced to NaN.
+    """
     out = {}
     for yr, df in dfs.items():
         for col in df.columns:
@@ -117,7 +128,9 @@ def convert_to_numeric(dfs: dict[int, pd.DataFrame]) -> dict[int, pd.DataFrame]:
 
 
 def save_cleaned(dfs: dict[int, pd.DataFrame], base_dir: str = DATA_DIR):
-
+    """
+    Saves each yearly cleaned DataFrame as a CSV file in a dedicated clean directory.
+    """
     clean_dir = os.path.join(base_dir, CLEAN_DIR_NAME)
     os.makedirs(clean_dir, exist_ok=True)
     for yr, df in dfs.items():
