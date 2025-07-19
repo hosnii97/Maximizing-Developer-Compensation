@@ -2,7 +2,9 @@ import pandas as pd
 
 
 def find_common_columns(dfs: dict[int, pd.DataFrame]) -> list[str]:
-
+    """
+    Identifies columns that are common across all DataFrames for each year.
+    """
     years = sorted(dfs)
     common = set(dfs[years[0]].columns)
     for yr in years[1:]:
@@ -11,6 +13,9 @@ def find_common_columns(dfs: dict[int, pd.DataFrame]) -> list[str]:
 
 
 def merge_data(dfs: dict[int, pd.DataFrame]) -> pd.DataFrame:
+    """
+    Merges multiple yearly DataFrames into a single DataFrame using only common columns.
+    """
     common_cols = find_common_columns(dfs)
     drop_cols = [
         'db_desired',
